@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="总结," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言百度前端技术学院2017的学习任务已经发布了一个周了，自己也做了一个系列(其实也偷了点懒),做了的任务如下：自定义网页右键菜单、正则表达式入门以及模拟vue双向绑定的前四个任务，第五个确实以自己现在的能力没有什么好的思路，等以后补充。">
+<meta name="keywords" content="总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IFE2017第一部分总结">
+<meta property="og:url" content="http://liuzhenkn.github.io/2017/04/20/IFE2017第一部分总结/index.html">
+<meta property="og:site_name" content="zhenkunliu&#39;s blog">
+<meta property="og:description" content="前言百度前端技术学院2017的学习任务已经发布了一个周了，自己也做了一个系列(其实也偷了点懒),做了的任务如下：自定义网页右键菜单、正则表达式入门以及模拟vue双向绑定的前四个任务，第五个确实以自己现在的能力没有什么好的思路，等以后补充。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-24T07:59:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IFE2017第一部分总结">
+<meta name="twitter:description" content="前言百度前端技术学院2017的学习任务已经发布了一个周了，自己也做了一个系列(其实也偷了点懒),做了的任务如下：自定义网页右键菜单、正则表达式入门以及模拟vue双向绑定的前四个任务，第五个确实以自己现在的能力没有什么好的思路，等以后补充。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liuzhenkn.github.io/2017/04/20/IFE2017第一部分总结/"/>
+
+
+
+
+
+  <title>IFE2017第一部分总结 | zhenkunliu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhenkunliu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知世故而不世故，善自嘲而不嘲人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liuzhenkn.github.io/2017/04/20/IFE2017第一部分总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhenkunliu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhenkunliu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">IFE2017第一部分总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T00:00:00+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>百度前端技术学院2017的学习任务已经发布了一个周了，自己也做了一个系列(其实也偷了点懒),做了的任务如下：自定义网页右键菜单、正则表达式入门以及模拟vue双向绑定的前四个任务，第五个确实以自己现在的能力没有什么好的思路，等以后补充。</p>
+<a id="more"></a>
+<h4 id="自定义网页右键菜单"><a href="#自定义网页右键菜单" class="headerlink" title="自定义网页右键菜单"></a>自定义网页右键菜单</h4><p>这个是属于普通难度的任务，知道鼠标右击事件、了解窗口宽高及元素宽高的获取基本就可以。<br>鼠标右键事件是 contextmenu,至于使用几级的事件处理程序就随意啦，使用clientWidth 和 offsetWidth来获取窗口宽度和元素宽度(高度同理)。<br>我自己注意的主要是使用了ES6的语法以及代码组织，将类似功能的函数封装在一个函数中，最后通过一个初始化函数来调用(主要还是实习时学习的)。</p>
+<ul>
+<li><a href="https://github.com/liuzhenkn/IFE2017/blob/master/rightHandButtonMenu/index.html" target="_blank" rel="external">代码</a></li>
+<li><a href="http://liuzhenkn.github.io/IFE2017/rightHandButtonMenu/index.html">demo</a></li>
+</ul>
+<h4 id="正则表达式入门"><a href="#正则表达式入门" class="headerlink" title="正则表达式入门"></a>正则表达式入门</h4><p>较为简单，主要要知道基础以及分组就可以了。</p>
+<ul>
+<li><a href="https://github.com/liuzhenkn/IFE2017/blob/master/RegExp/index.html" target="_blank" rel="external">代码</a></li>
+<li><a href="http://liuzhenkn.github.io/IFE2017/RegExp/index.html">demo</a></li>
+</ul>
+<h4 id="动态数据绑定（一）"><a href="#动态数据绑定（一）" class="headerlink" title="动态数据绑定（一）"></a>动态数据绑定（一）</h4><p>一的任务主要是实现监听数据变化,实现一个Observer类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">let app1 = new Observer(&#123;</span><br><span class="line">  name: &apos;youngwind&apos;,</span><br><span class="line">  age: 25</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">let app2 = new Observer(&#123;</span><br><span class="line">  university: &apos;bupt&apos;,</span><br><span class="line">  major: &apos;computer&apos;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 要实现的结果如下：</span><br><span class="line">app1.data.name // 你访问了 name</span><br><span class="line">app.data.age = 100;  // 你设置了 age，新的值为100</span><br><span class="line">app2.data.university // 你访问了 university</span><br><span class="line">app2.data.major = &apos;science&apos;  // 你设置了 major，新的值为 science</span><br></pre></td></tr></table></figure></p>
+<p>实现第一个任务实际上主要用到了一个方法Object.defineProperty，通过这个方法，可以自定义getter和setter函数，从而在获取对象属性和设置对象属性的时候能够执行自定义的回调函数。<br>要注意的是对象往往是一个深层次的结构，对象的某个属性可能仍然是一个对象，这时候我们需要进行递归，如果属性还是对象就继续new Observer。</p>
+<ul>
+<li><a href="https://github.com/liuzhenkn/IFE2017/blob/master/BindData1/index.html" target="_blank" rel="external">代码</a></li>
+<li><a href="http://liuzhenkn.github.io/IFE2017/BindData1/index.html">demo</a></li>
+</ul>
+<h4 id="动态数据绑定（二）"><a href="#动态数据绑定（二）" class="headerlink" title="动态数据绑定（二）"></a>动态数据绑定（二）</h4><p>主要是实现$watch api，实现自定义回调函数。<br>在一的基础上，给Observer类添加了watch属性(其值是一个对象)，用于保存自定义的监听事件，一个属性名对应一个回调函数，我们在set的时候触发watch中对应的方法。<br>为了解决set的值也是个对象，进行判断如果是对象则添加观察者。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">set: function(newValue)&#123;</span><br><span class="line">    if(typeof newValue === &apos;object&apos;)&#123; //set对象的情况</span><br><span class="line">      new Observer(newValue);</span><br><span class="line">    &#125;</span><br><span class="line">    if (newValue === value)&#123;</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line">    that.watch[key](newValue); //触发对应方法</span><br><span class="line">    value = newValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><a href="https://github.com/liuzhenkn/IFE2017/blob/master/BindData2/index.html" target="_blank" rel="external">代码</a></li>
+<li><a href="http://liuzhenkn.github.io/IFE2017/BindData2/index.html">demo</a></li>
+</ul>
+<h4 id="动态数据绑定-三"><a href="#动态数据绑定-三" class="headerlink" title="动态数据绑定(三)"></a>动态数据绑定(三)</h4><p>实现如下功能:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">let app2 = new Observer(&#123;</span><br><span class="line">    name: &#123;</span><br><span class="line">        firstName: &apos;shaofeng&apos;,</span><br><span class="line">        lastName: &apos;liang&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    age: 25</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app2.$watch(&apos;name&apos;, function (newName) &#123;</span><br><span class="line">    console.log(&apos;我的姓名发生了变化，可能是姓氏变了，也可能是名字变了。&apos;)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app2.data.name.firstName = &apos;hahaha&apos;;</span><br><span class="line">// 输出：我的姓名发生了变化，可能是姓氏变了，也可能是名字变了。</span><br><span class="line">app2.data.name.lastName = &apos;blablabla&apos;;</span><br><span class="line">// 输出：我的姓名发生了变化，可能是姓氏变了，也可能是名字变了。</span><br></pre></td></tr></table></figure></p>
+<p>将变化从底层传播到上层，出发上层的自定义事件。<br>首先我在Observer类中添加了两个新的属性记录父级及其key。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function Observer(data,parent,parentKey)&#123;</span><br><span class="line">  this.data = data;</span><br><span class="line">  this.watch = &#123;&#125;;</span><br><span class="line">  //传递参数，确定父级及其key</span><br><span class="line">  this.parent = parent;</span><br><span class="line">  this.parentKey = parentKey;</span><br><span class="line">  this.travel(data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果属性还是对象的时候就会将父级信息传入，最后在set方法中，如果存在父级则再调用父级的方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">set: function(newValue)&#123;</span><br><span class="line">  if(that.parent)&#123;</span><br><span class="line">    that.parent.watch[that.parentKey](newValue) // 父类监听事件</span><br><span class="line">  &#125;</span><br><span class="line">  that.watch[key](newValue) // 回调监听事件</span><br><span class="line">  if(newValue === value)&#123;</span><br><span class="line">      return;</span><br><span class="line">  &#125;</span><br><span class="line">  value = newValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><a href="https://github.com/liuzhenkn/IFE2017/blob/master/BindData3/index.html" target="_blank" rel="external">代码</a></li>
+<li><a href="http://liuzhenkn.github.io/IFE2017/BindData3/index.html">demo</a></li>
+</ul>
+<h4 id="动态数据绑定-四"><a href="#动态数据绑定-四" class="headerlink" title="动态数据绑定(四)"></a>动态数据绑定(四)</h4><p>从四开始就有一定的难度了，我从很大程度上借鉴了别人的思路。参考博客:<a href="https://github.com/qieguo2016/Vueuv/blob/master/README.md" target="_blank" rel="external">https://github.com/qieguo2016/Vueuv/blob/master/README.md</a><br>实现如下的这样一个 Vue，传入参数是一个 Selector 和一个数据对象，程序需要将 HTML 模板片段渲染成正确的模样。<br>主要思想是创建一个新的文档片段，从头开始遍历文档节点，节点类型主要是元素节点和文本节点(其余节点忽略)，元素节点则继续遍历直到文本节点，文本节点则判断是否有需要替换的模版，有则进行替换，替换完后插入到片段中。最后将片段替换进文档中。</p>
+<ul>
+<li><a href="https://github.com/liuzhenkn/IFE2017/blob/master/BindData4/index.html" target="_blank" rel="external">代码</a></li>
+<li><a href="http://liuzhenkn.github.io/IFE2017/BindData4/index.html">demo</a></li>
+</ul>
+<h4 id="动态数据绑定-五"><a href="#动态数据绑定-五" class="headerlink" title="动态数据绑定(五)"></a>动态数据绑定(五)</h4><p>第五个就是实现双向绑定，如果数据变化文档中的显示也跟着变化。其实就是前面所有任务的一个结合，看了给的攻略但是自己暂时还有点理解不能，等过一段时间再来完善。</p>
+<p>接下来应该回去做网页抓取的系列，自己比较感兴趣，会进行第二波总结。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/总结/" rel="tag"># 总结</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/19/Vue学习记录整理/" rel="next" title="Vue学习记录整理">
+                <i class="fa fa-chevron-left"></i> Vue学习记录整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/18/毕业总结/" rel="prev" title="毕业总结">
+                毕业总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhenkunliu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhenkn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/执凉" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义网页右键菜单"><span class="nav-number">2.</span> <span class="nav-text">自定义网页右键菜单</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正则表达式入门"><span class="nav-number">3.</span> <span class="nav-text">正则表达式入门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态数据绑定（一）"><span class="nav-number">4.</span> <span class="nav-text">动态数据绑定（一）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态数据绑定（二）"><span class="nav-number">5.</span> <span class="nav-text">动态数据绑定（二）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态数据绑定-三"><span class="nav-number">6.</span> <span class="nav-text">动态数据绑定(三)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态数据绑定-四"><span class="nav-number">7.</span> <span class="nav-text">动态数据绑定(四)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态数据绑定-五"><span class="nav-number">8.</span> <span class="nav-text">动态数据绑定(五)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhenkunliu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

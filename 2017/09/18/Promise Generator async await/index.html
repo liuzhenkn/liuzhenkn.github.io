@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言本次分享的内容是 Promise、Generator 函数与 async/await ，都是与异步操作相关的内容，我们常见的异步操作基本是：回调函数和事件监听，本次分享中主要以AJAX为例。 1234567891011121314var request = new XMLHttpRequest();request.onreadystatechange = function () &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promise、Generator 函数与 async&#x2F;await">
+<meta property="og:url" content="http://liuzhenkn.github.io/2017/09/18/Promise Generator async await/index.html">
+<meta property="og:site_name" content="zhenkunliu&#39;s blog">
+<meta property="og:description" content="前言本次分享的内容是 Promise、Generator 函数与 async/await ，都是与异步操作相关的内容，我们常见的异步操作基本是：回调函数和事件监听，本次分享中主要以AJAX为例。 1234567891011121314var request = new XMLHttpRequest();request.onreadystatechange = function () &amp;#123;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20171013/promise.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20171013/promises.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20171013/iterator.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20171013/generator.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20171013/prototype.png">
+<meta property="og:updated_time" content="2019-12-24T06:47:57.700Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Promise、Generator 函数与 async&#x2F;await">
+<meta name="twitter:description" content="前言本次分享的内容是 Promise、Generator 函数与 async/await ，都是与异步操作相关的内容，我们常见的异步操作基本是：回调函数和事件监听，本次分享中主要以AJAX为例。 1234567891011121314var request = new XMLHttpRequest();request.onreadystatechange = function () &amp;#123;">
+<meta name="twitter:image" content="http://liuzhenkn.github.io/images/20171013/promise.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liuzhenkn.github.io/2017/09/18/Promise Generator async await/"/>
+
+
+
+
+
+  <title>Promise、Generator 函数与 async/await | zhenkunliu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhenkunliu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知世故而不世故，善自嘲而不嘲人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liuzhenkn.github.io/2017/09/18/Promise Generator async await/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhenkunliu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhenkunliu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Promise、Generator 函数与 async/await</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T16:23:46+08:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>本次分享的内容是 Promise、Generator 函数与 async/await ，都是与<strong>异步操作</strong>相关的内容，我们常见的异步操作基本是：<strong>回调函数</strong>和<strong>事件监听</strong>，本次分享中主要以AJAX为例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (request.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (request.status === <span class="number">200</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> success(request.responseText);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> fail(request.status);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">request.open(<span class="string">'GET'</span>, <span class="string">'/api/categories'</span>);</span><br><span class="line">request.send();</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h4><p>首先先看一下Promise是什么：</p>
+<p><img src="/images/20171013/promise.png" alt="Promise.png"></p>
+<p>可以看到Promise是一个构造函数，里面有我们熟悉的all、 reject 、resolve 方法，原型上有 then、catch 方法，我们可以新建一个Promise 对象来使用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(</span><br><span class="line">    <span class="comment">/* executor */</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;...&#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我觉得文档上说的比我清楚的多：</p>
+<blockquote>
+<p><strong>Promise</strong>对象是一个代理对象（代理一个值）。它允许你为异步操作的成功和失败分别绑定相应的处理方法（handlers）。<br>一个 Promise有以下几种状态:</p>
+<blockquote>
+<ul>
+<li><em>pending</em>: 初始状态，不是成功或失败状态。</li>
+<li><em>fulfilled</em>: 意味着操作成功完成。</li>
+<li><em>rejected</em>: 意味着操作失败。</li>
+</ul>
+</blockquote>
+<p>pending 状态的 Promise 对象可能触发 fulfilled 状态并传递一个值给相应的状态处理方法，也可能触发 rejected 状态 并传递失败信息。当其中任一种情况出现时，Promise 对象的 then 方法绑定的处理方法（handlers）就会被调用（then方法包含两个参数：onfulfilled 和 onrejected，它们都是 Function 类型。当Promise状态为<em>fulfilled</em>时，调用 then 的 onfulfilled 方法，当Promise状态为<em>rejected</em>时，调用 then 的 onrejected 方法， 所以在异步操作的完成和绑定处理方法之间不存在竞争）。<br>因为 Promise.prototype.then 和 Promise.prototype.catch<br>方法返回 promise 对象， 所以它们可以被链式调用。</p>
+</blockquote>
+<p><img src="/images/20171013/promises.png" alt="promises.png"></p>
+<h5 id="基本api"><a href="#基本api" class="headerlink" title="基本api"></a>基本api</h5><ul>
+<li>Promise.resolve(value)</li>
+</ul>
+<blockquote>
+<p>返回一个状态由给定value决定的Promise对象。如果该值是一个Promise对象，则直接返回该对象；如果该值是thenable(即，带有then方法的对象)，返回的Promise对象的最终状态由then方法执行决定；否则的话(该value为空，基本类型或者不带then方法的对象),返回的Promise对象状态为fulfilled，并且将该value传递给对应的then方法。通常而言，如果你不知道一个值是否是Promise对象，使用Promise.resolve(value) 来返回一个Promise对象,这样就能将该value以Promise对象形式使用。</p>
+</blockquote>
+<ul>
+<li>Promise.reject(resason)</li>
+</ul>
+<blockquote>
+<p>返回一个状态为失败的Promise对象，并将给定的失败信息传递给对应的处理方法</p>
+</blockquote>
+<ul>
+<li>Promise.prototype.then(onFulfilled, onRejected)</li>
+</ul>
+<blockquote>
+<p>添加肯定和否定回调到当前 promise, 返回一个新的 promise, 将以回调的返回值 来resolve.</p>
+</blockquote>
+<ul>
+<li>Promise.prototype.catch(onRejected)</li>
+</ul>
+<blockquote>
+<p>添加一个否定(rejection) 回调到当前 promise, 返回一个新的promise。</p>
+</blockquote>
+<ul>
+<li>Promise.all(iterable) // 所有的完成</li>
+<li>Promise.race(iterable) // 竞速，完成一个即可</li>
+</ul>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>然后我们用Promise来重写一下ajax：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span> (<span class="params">method, url, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> request = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (request.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (request.status === <span class="number">200</span>) &#123;</span><br><span class="line">                    resolve(request.responseText);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    reject(request.status);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        request.open(method, url);</span><br><span class="line">        request.send(data);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = ajax(<span class="string">'GET'</span>, <span class="string">'/api/xxxx'</span>);</span><br><span class="line">p.then(<span class="function"><span class="keyword">function</span> (<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(text);</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">status</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'ERROR: '</span> + status);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>看起来好像并没有什么改变，但是如果我们想一个请求完成再发起另一个请求呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ajax (<span class="string">'GET'</span>,  <span class="string">'/api/hhh'</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ajax(<span class="string">'POST'</span>, <span class="string">'/api/hhhh'</span>, data.body);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ajax(<span class="string">'POST'</span>, <span class="string">'/api/hhhhh'</span>, data.body);</span><br><span class="line">&#125;)</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>肯定比无限回调好看多了。</p>
+<p>除此之外，我们可以使用 Promise.all() 来并行执行异步操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params">num</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            resolve(num);</span><br><span class="line">        &#125;, <span class="number">1000</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.all([func(<span class="number">1</span>), func(<span class="number">2</span>), func(<span class="number">3</span>)])</span><br><span class="line">.then(<span class="function"><span class="keyword">function</span>(<span class="params">results</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(results);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// console的值为 [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<p>三个异步操作的并行执行的，等到它们都执行完后才会进到then里面，all会把所有异步操作的结果放进一个数组中传给then，就是上面的results。</p>
+<h4 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h4><p>之前没怎么接触过，Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同, 是一个可以返回多次的函数。<br>generator 函数由 <strong>function*</strong>定义，除了 return 还可以使用 yield 返回多次。那到底怎么用？</p>
+<h5 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h5><p>先来个简单的例子：<br>斐波那契数列，一般我们要这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fib</span>(<span class="params">max</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span></span><br><span class="line">        t,</span><br><span class="line">        a = <span class="number">0</span>,</span><br><span class="line">        b = <span class="number">1</span>,</span><br><span class="line">        arr = [<span class="number">0</span>, <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">while</span> (arr.length &lt; max) &#123;</span><br><span class="line">        t = a + b;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t;</span><br><span class="line">        arr.push(t);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line">fib(<span class="number">5</span>); <span class="comment">// [0, 1, 1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<p>使用 generator：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fib</span>(<span class="params">max</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span></span><br><span class="line">        t,</span><br><span class="line">        a = <span class="number">0</span>,</span><br><span class="line">        b = <span class="number">1</span>,</span><br><span class="line">        n = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (n &lt; max) &#123;</span><br><span class="line">        <span class="keyword">yield</span> a;</span><br><span class="line">        t = a + b;</span><br><span class="line">        a = b;</span><br><span class="line">        b = t;</span><br><span class="line">        n ++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f = fib(<span class="number">5</span>);</span><br><span class="line">f.next(); <span class="comment">// &#123;value: 0, done: false&#125;</span></span><br><span class="line">f.next(); <span class="comment">// &#123;value: 1, done: false&#125;</span></span><br><span class="line">f.next(); <span class="comment">// &#123;value: 1, done: false&#125;</span></span><br><span class="line">f.next(); <span class="comment">// &#123;value: 2, done: false&#125;</span></span><br><span class="line">f.next(); <span class="comment">// &#123;value: 3, done: true&#125;</span></span><br><span class="line"></span><br><span class="line">\\ 或者</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> x <span class="keyword">of</span> f) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x); <span class="comment">// 依次输出0, 1, 1, 2, 3</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要了解generator的内在，需要先了解一下Iterator。<br>Iterator是一个接口(好吧我一直不太明白，与特定规范匹配的属性值？)，只要是一系列和规范匹配的属性值(array、map、set等数据结构)，就认为其是可迭代的。<br>我们在控制台内创建一个数组，就会发现其有一个 Symbol.iterator 方法(我就是不太清楚是哪里来的，js引擎自己加的？)，这就是一个迭代器生成函数，执行该函数就会生成一个迭代器。<br>一个迭代器有next等方法， 其实就跟我们generator生成的迭代器类似，但是又不一样。看图我们可以理解一点，但是嗯，我觉得说不清楚，大家自行理解吧。<br><img src="/images/20171013/iterator.png" alt="iterator.png"><br><img src="/images/20171013/generator.png" alt="generator.png"><br><img src="/images/20171013/prototype.png" alt="prototype.png"></p>
+<h4 id="async、await"><a href="#async、await" class="headerlink" title="async、await"></a>async、await</h4><p>首先他们来自 ES2016 ，为的是把异步操作变得更方便。 async 函数就是 Generator 函数的语法糖。<br><code>`</code></p>
+<h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="external">MDN</a></p>
+<p><a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000" target="_blank" rel="external">廖雪峰的javascript教程</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2015/04/generator.html" target="_blank" rel="external">Generator 函数的含义与用法</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2015/05/async.html" target="_blank" rel="external">async 函数的含义和用法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/27/论如何减少小错误/" rel="next" title="论如何减少小错误">
+                <i class="fa fa-chevron-left"></i> 论如何减少小错误
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/29/如何实现一个环形进度条？/" rel="prev" title="如何实现一个环形进度条？">
+                如何实现一个环形进度条？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhenkunliu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhenkn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/执凉" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Promise"><span class="nav-number">2.</span> <span class="nav-text">Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本api"><span class="nav-number">2.1.</span> <span class="nav-text">基本api</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">3.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Generator-函数"><span class="nav-number">4.</span> <span class="nav-text">Generator 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#应用-1"><span class="nav-number">4.1.</span> <span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#async、await"><span class="nav-number">5.</span> <span class="nav-text">async、await</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文章"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhenkunliu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

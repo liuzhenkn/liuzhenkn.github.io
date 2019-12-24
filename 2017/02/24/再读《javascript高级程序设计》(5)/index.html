@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,读书笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言这一篇是读书总结的最后一篇了，虽然后面还有不少章节，但是由于自己确实经验还不足，看完了之后仅仅是记住了书本上的内容，没有什么自己的一些想法，以后自己经验丰富了可能会再补充吧，Canvas自己可能会再学习一下单独开个学习记录。本次的主要内容是第十、第十一章、十二、十三章的内容，关于DOM及其扩展以及事件相关的内容。">
+<meta name="keywords" content="JavaScript,读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再读《JavaScript高级程序设计》(5)">
+<meta property="og:url" content="http://liuzhenkn.github.io/2017/02/24/再读《javascript高级程序设计》(5)/index.html">
+<meta property="og:site_name" content="zhenkunliu&#39;s blog">
+<meta property="og:description" content="前言这一篇是读书总结的最后一篇了，虽然后面还有不少章节，但是由于自己确实经验还不足，看完了之后仅仅是记住了书本上的内容，没有什么自己的一些想法，以后自己经验丰富了可能会再补充吧，Canvas自己可能会再学习一下单独开个学习记录。本次的主要内容是第十、第十一章、十二、十三章的内容，关于DOM及其扩展以及事件相关的内容。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170218/1.gif">
+<meta property="og:updated_time" content="2019-12-24T06:47:57.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="再读《JavaScript高级程序设计》(5)">
+<meta name="twitter:description" content="前言这一篇是读书总结的最后一篇了，虽然后面还有不少章节，但是由于自己确实经验还不足，看完了之后仅仅是记住了书本上的内容，没有什么自己的一些想法，以后自己经验丰富了可能会再补充吧，Canvas自己可能会再学习一下单独开个学习记录。本次的主要内容是第十、第十一章、十二、十三章的内容，关于DOM及其扩展以及事件相关的内容。">
+<meta name="twitter:image" content="http://liuzhenkn.github.io/images/20170218/1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liuzhenkn.github.io/2017/02/24/再读《javascript高级程序设计》(5)/"/>
+
+
+
+
+
+  <title>再读《JavaScript高级程序设计》(5) | zhenkunliu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhenkunliu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知世故而不世故，善自嘲而不嘲人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liuzhenkn.github.io/2017/02/24/再读《javascript高级程序设计》(5)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhenkunliu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhenkunliu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">再读《JavaScript高级程序设计》(5)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-24T00:00:00+08:00">
+                2017-02-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这一篇是读书总结的最后一篇了，虽然后面还有不少章节，但是由于自己确实经验还不足，看完了之后仅仅是记住了书本上的内容，没有什么自己的一些想法，以后自己经验丰富了可能会再补充吧，Canvas自己可能会再学习一下单独开个学习记录。<br>本次的主要内容是第十、第十一章、十二、十三章的内容，关于DOM及其扩展以及事件相关的内容。</p>
+<a id="more"></a>
+<h3 id="第十章-DOM-第十一章-DOM扩展"><a href="#第十章-DOM-第十一章-DOM扩展" class="headerlink" title="第十章 DOM 第十一章 DOM扩展"></a>第十章 DOM 第十一章 DOM扩展</h3><h5 id="什么是DOM？"><a href="#什么是DOM？" class="headerlink" title="什么是DOM？"></a>什么是DOM？</h5><p>DOM是文档对象模型，是针对HTML和XML文档的一个API。DOM描绘了一个层次化的节点树，使我们可以添加、移动和修改页面的某一部分。</p>
+<h5 id="DOM扩展"><a href="#DOM扩展" class="headerlink" title="DOM扩展"></a>DOM扩展</h5><p>对DOM的两个主要扩展是Selectors API和HTML5。<br>querySelector()方法可以通过接收一个css选择符，返回匹配的 <strong>第一个元素</strong>。看起来和jQuery的选择方法有点像，但是注意只返回匹配的第一个元素。如果想都返回，需要使用querySelectorAll()方法。除此之外还有一个matchesSelector()方法，用于检测相应选择符的元素是否存在。</p>
+<h5 id="HTML5"><a href="#HTML5" class="headerlink" title="HTML5"></a>HTML5</h5><p>HTML5的新增内容真的很多，我只提自己注意到的新的点。<br>自定义数据属性，为元素提供与渲染无关的信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;test&quot; data-name=&quot;jerry&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">var div = document.getElementById(&quot;test&quot;);</span><br><span class="line">var name = div.dataset.name;</span><br></pre></td></tr></table></figure></p>
+<p>以前我都是使用jQuery，使用data()方法来取得、设置值，原生的Javascript与jQuery在这里不同，使用的是dataset。这一点要注意不要混淆。</p>
+<h3 id="DOM2和DOM3"><a href="#DOM2和DOM3" class="headerlink" title="DOM2和DOM3"></a>DOM2和DOM3</h3><p>前面我们也讲过，DOM1级主要定义的是HTML和XML文档的底层结构。DOM2和DOM3级则在底层结构上引入了更多的交互能力。<br>这里我主要看了元素大小，因为有很多属性，所以经常混淆。</p>
+<ul>
+<li>offsetHeight、offsetWidth：元素占用的宽高，包括元素的宽高、可见的滚动条的宽高以及边框。</li>
+<li>offsetTop、offsetLeft： 指的是元素的边框到 <strong>包含元素</strong> 的内边框的距离。<br>客户区大小</li>
+<li>clientHeight、clientWidth: 是指内容区宽高加上内边框宽高。<br>滚动大小</li>
+<li>scrollHeight、scrollWidth：没有滚动条的情况下，元素内容的总宽高</li>
+<li>scrollLeft、scrollTop：被隐藏在内容区域左侧及上侧像素数，所以可以通过设置来改变滚动位置。</li>
+</ul>
+<p><img src="/images/20170218/1.gif" alt></p>
+<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><p>事件的话主要还是理解事件流，事件流是从页面中接收事件的顺序。要知道的是，IE的事件流是冒泡流、而Netscape Communicator的事件流是事件捕获流。<br>冒泡流就是说事件最准确的元素逐级向上，而捕获流是时间从最上级一直到最精确的元素。<br>DOM2级时间规定的事件流包括三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段。虽然DOM2级事件明确要求捕获阶段不会涉及事件目标，但是在高版本浏览器中都会在捕获阶段触发事件，结果就是有两个机会在目标对象上操作事件。</p>
+<h5 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h5><p>DOM0级事件处理程序将一个函数复制给一个事件处理程序属性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">btn.onclick = function()&#123;</span><br><span class="line">  alert(&quot;DOM0级事件处理程序&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>DOM2级事件处理程序定义了两个方法addEventListener()和removeEventlistener()。注意ie是attachEvent()和detachEvent()。<br>使用DOM2级事件处理程序的好处是可以在一个元素定义多个事件处理程序。</p>
+<h5 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h5><p>当事件处理程序过多时，需要使用事件委托。事件委托利用了事件冒泡，只制定一个事件处理程序就可以管理某一类型的所有事件。<br>把事件绑定自父元素，在父元素的事件处理程序中进行判断(通过target)。(我就不举例子了这次，使用过的同学应该都清楚。)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/23/再读《javascript高级程序设计》(4)/" rel="next" title="再读《JavaScript高级程序设计》(4)">
+                <i class="fa fa-chevron-left"></i> 再读《JavaScript高级程序设计》(4)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/19/六个月实习的总结/" rel="prev" title="六个月实习的总结">
+                六个月实习的总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhenkunliu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhenkn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/执凉" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第十章-DOM-第十一章-DOM扩展"><span class="nav-number">2.</span> <span class="nav-text">第十章 DOM 第十一章 DOM扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是DOM？"><span class="nav-number">2.0.1.</span> <span class="nav-text">什么是DOM？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DOM扩展"><span class="nav-number">2.0.2.</span> <span class="nav-text">DOM扩展</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTML5"><span class="nav-number">2.0.3.</span> <span class="nav-text">HTML5</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM2和DOM3"><span class="nav-number">3.</span> <span class="nav-text">DOM2和DOM3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件"><span class="nav-number">4.</span> <span class="nav-text">事件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#事件处理程序"><span class="nav-number">4.0.1.</span> <span class="nav-text">事件处理程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#事件委托"><span class="nav-number">4.0.2.</span> <span class="nav-text">事件委托</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhenkunliu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

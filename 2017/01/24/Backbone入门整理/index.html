@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Backbone.js,总结," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Backbone有什么优缺点？优点1、轻量、入门上手简单。2、MVC架构清晰，很容易就能把各层分离出来。不足1、View层实现的比较简单，没有操作DOM的方法，如果要做复杂操作需要依赖其他库。2、感觉资料比较少、优秀的文章少。(个人通过学习的感觉)">
+<meta name="keywords" content="Backbone.js,总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Backbone.js入门整理">
+<meta property="og:url" content="http://liuzhenkn.github.io/2017/01/24/Backbone入门整理/index.html">
+<meta property="og:site_name" content="zhenkunliu&#39;s blog">
+<meta property="og:description" content="Backbone有什么优缺点？优点1、轻量、入门上手简单。2、MVC架构清晰，很容易就能把各层分离出来。不足1、View层实现的比较简单，没有操作DOM的方法，如果要做复杂操作需要依赖其他库。2、感觉资料比较少、优秀的文章少。(个人通过学习的感觉)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/7.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/8.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/9.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/10.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/11.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/12.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/13.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/14.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/15.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/16.png">
+<meta property="og:updated_time" content="2019-12-24T06:47:57.699Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Backbone.js入门整理">
+<meta name="twitter:description" content="Backbone有什么优缺点？优点1、轻量、入门上手简单。2、MVC架构清晰，很容易就能把各层分离出来。不足1、View层实现的比较简单，没有操作DOM的方法，如果要做复杂操作需要依赖其他库。2、感觉资料比较少、优秀的文章少。(个人通过学习的感觉)">
+<meta name="twitter:image" content="http://liuzhenkn.github.io/images/20170118/7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liuzhenkn.github.io/2017/01/24/Backbone入门整理/"/>
+
+
+
+
+
+  <title>Backbone.js入门整理 | zhenkunliu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhenkunliu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知世故而不世故，善自嘲而不嘲人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liuzhenkn.github.io/2017/01/24/Backbone入门整理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhenkunliu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhenkunliu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Backbone.js入门整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-24T00:00:00+08:00">
+                2017-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Backbone有什么优缺点？"><a href="#Backbone有什么优缺点？" class="headerlink" title="Backbone有什么优缺点？"></a>Backbone有什么优缺点？</h3><p>优点<br>1、轻量、入门上手简单。<br>2、MVC架构清晰，很容易就能把各层分离出来。<br>不足<br>1、View层实现的比较简单，没有操作DOM的方法，如果要做复杂操作需要依赖其他库。<br>2、感觉资料比较少、优秀的文章少。<br>(个人通过学习的感觉)<br><a id="more"></a></p>
+<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><h4 id="Model、Collection、View、Router。"><a href="#Model、Collection、View、Router。" class="headerlink" title="Model、Collection、View、Router。"></a>Model、Collection、View、Router。</h4><p>Model是数据模型，里面存在基础数据以及围绕着数据的转换、验证、计算以及请求等逻辑。  </p>
+<p><img src="/images/20170118/7.png" alt="model.png"></p>
+<p>Collection是Model对象的有序集合。其中就有增删、获取长度、排序、比较等工具方法。  </p>
+<p><img src="/images/20170118/8.png" alt="collection.png"></p>
+<p>View中把Model中的数据展现出来，同时监听Model中的数据变化以及绑定DOM事件。  </p>
+<p><img src="/images/20170118/9.png" alt="view.png"></p>
+<p>Router是路由的意思，可以通过不同的url来建立不同的视图等。(理解的比较少)<br>(在网上找到的图感觉记录的比较全面，里面也有很多自己没使用过的东西，自己也没有整理过每个部分的api等，就不自己画了。)  </p>
+<h4 id="各模块间的关系"><a href="#各模块间的关系" class="headerlink" title="各模块间的关系"></a>各模块间的关系</h4><p><img src="/images/20170118/10.png" alt="关系.png"><br>Model中保存着数据，Collection是同一个Model的集合，View可以监听Model中的数据变化，也可以监听Collection中Model的变化，在View层中绑定事件，事件可能会触发Model或Collection的变化，触发监听的回调事件。如果发生URL变化Router就会根据URL判断View的建立和销毁问题这样就可以在一个页面中通过View的建立销毁实现单页面应用(Router没自己用过，暂时这么理解)。  </p>
+<h3 id="TODOList"><a href="#TODOList" class="headerlink" title="TODOList"></a>TODOList</h3><p><img src="/images/20170118/11.png" alt="todolist.png"></p>
+<h4 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h4><p>TODOList是记录任务的一个功能。<br>1、添加任务<br>2、完成任务<br>3、删除任务<br>4、全部完成  </p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>样式直接使用官网提供Demo的默认样式，只是重写了JS部分。<br>Model:<br>一条Task就应该是一个Model，记录当前任务的内容以及完成状态，defaluts是给新建的对象的默认值，另外需要修改状态的方法，因为是修改数据的方法，所以写在Model中，如果需要修改内容，直接在Model中定义相应方法即可。代码如下：</p>
+<p><img src="/images/20170118/12.png" alt="modelCode.png"><br>Collection:<br>TasksCollection就是每一个Task的集合，首先指定是哪个Model的集合，接下来获取localStroage中的数据或者新建一个，然后提供两个方法来把集合中的Task分为已完成和未完成的。</p>
+<p><img src="/images/20170118/13.png" alt="collectionCode.png"><br>View:<br>写的时候就在想，为什么把View分为两个，如果写成一个会有问题吗？<br>自己的理解就是一个Task是一个Model对应一个View，而总体的Collection也需要一个View去监听变化，好像也没办法写在一起，会导致逻辑混乱，可见如何划分View也是应该好好去思考的。<br>TaskView是每个任务的视图，首先设定一个标签li指定为根元素，即产生的DOM元素的根元素就是li，template使用的是underscore.js中自带的方法，自己没看使用方法，但确实是用起来比artTemplate麻烦多了，然后进行事件绑定，我们需要的只有两种，一种是点击checkbox切换任务状态，另一种是删除当前的任务。<br>initalize是初始化时自动调用的，在初始化时绑定监听，监听当前View对应的Model的变化——状态变化、删除。<br>render是渲染该条数据到页面中。其他两个方法都是调用Model中的方法。</p>
+<p><img src="/images/20170118/14.png" alt="taskView.png"><br>AppView监听的是Collection的变化，首先指定el，指定视图DOM元素，然后指定模版，绑定事件与相应方法，具体就不写了，和TaskView的形式类似。最后需要创建AppView实例。</p>
+<p><img src="/images/20170118/15.png" alt="appView1.png"></p>
+<p><img src="/images/20170118/16.png" alt="appview2.png"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>自己也只是进行了快速的浏览和简单的做了一个简单的DEMO，算是一个快速的上手，以前没有使用过MVC框架，通过学习其实也对MVC的思想有了一定的理解（Controller的概念还是有点模糊），另外api的使用不太熟悉，还是需要上网查，自己对View的划分也没有实际做过，做的这个TODOList是一种多Model多View的形式，上次鸣旭的CodeReview是一种单Model多View的形式(用不到Collection)，本次学习只是一个快速上手，自己还是需要以后继续学习，一方面自己文档熟悉api(自己业余时间学习)，另一方面先通过view其他同学的代码来思考别人的做法等。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Backbone-js/" rel="tag"># Backbone.js</a>
+          
+            <a href="/tags/总结/" rel="tag"># 总结</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/23/Flex布局学习记录/" rel="next" title="FLex布局学习记录">
+                <i class="fa fa-chevron-left"></i> FLex布局学习记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/20/再读《javascript高级程序设计》(1)/" rel="prev" title="再读《JavaScript高级程序设计》(1)">
+                再读《JavaScript高级程序设计》(1) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhenkunliu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhenkn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/执凉" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Backbone有什么优缺点？"><span class="nav-number">1.</span> <span class="nav-text">Backbone有什么优缺点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础"><span class="nav-number">2.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Model、Collection、View、Router。"><span class="nav-number">2.1.</span> <span class="nav-text">Model、Collection、View、Router。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#各模块间的关系"><span class="nav-number">2.2.</span> <span class="nav-text">各模块间的关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODOList"><span class="nav-number">3.</span> <span class="nav-text">TODOList</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#功能分析"><span class="nav-number">3.1.</span> <span class="nav-text">功能分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现"><span class="nav-number">3.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhenkunliu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="fis,前端工具," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是FIS？FIS(Front-end Intergrated Solution)，前端集成解决方案。 通常，一套完整的前端技术解决方案包括四个方向：  前端框架：提供组件加载及管理框架支持，提供前端基础库及组件库。 模板框架：提供组件化开发模式支持；配合前端框架收集页面所需要的最小静态资源需求；留有充分的性能优化空间，性能优化对工程师透明。 自动化工具：提供基本优化能力；为前端框架、模板框架提">
+<meta name="keywords" content="fis,前端工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FIS学习记录">
+<meta property="og:url" content="http://liuzhenkn.github.io/2016/12/19/FIS学习记录/index.html">
+<meta property="og:site_name" content="zhenkunliu&#39;s blog">
+<meta property="og:description" content="什么是FIS？FIS(Front-end Intergrated Solution)，前端集成解决方案。 通常，一套完整的前端技术解决方案包括四个方向：  前端框架：提供组件加载及管理框架支持，提供前端基础库及组件库。 模板框架：提供组件化开发模式支持；配合前端框架收集页面所需要的最小静态资源需求；留有充分的性能优化空间，性能优化对工程师透明。 自动化工具：提供基本优化能力；为前端框架、模板框架提">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/1.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/2.png">
+<meta property="og:updated_time" content="2019-12-24T06:47:57.699Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FIS学习记录">
+<meta name="twitter:description" content="什么是FIS？FIS(Front-end Intergrated Solution)，前端集成解决方案。 通常，一套完整的前端技术解决方案包括四个方向：  前端框架：提供组件加载及管理框架支持，提供前端基础库及组件库。 模板框架：提供组件化开发模式支持；配合前端框架收集页面所需要的最小静态资源需求；留有充分的性能优化空间，性能优化对工程师透明。 自动化工具：提供基本优化能力；为前端框架、模板框架提">
+<meta name="twitter:image" content="http://liuzhenkn.github.io/images/20170118/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liuzhenkn.github.io/2016/12/19/FIS学习记录/"/>
+
+
+
+
+
+  <title>FIS学习记录 | zhenkunliu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhenkunliu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知世故而不世故，善自嘲而不嘲人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liuzhenkn.github.io/2016/12/19/FIS学习记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhenkunliu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhenkunliu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FIS学习记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-19T00:00:00+08:00">
+                2016-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="什么是FIS？"><a href="#什么是FIS？" class="headerlink" title="什么是FIS？"></a>什么是FIS？</h5><p>FIS(Front-end Intergrated Solution)，前端集成解决方案。 通常，一套完整的前端技术解决方案包括四个方向：</p>
+<ol>
+<li><strong>前端框架</strong>：提供组件加载及管理框架支持，提供前端基础库及组件库。</li>
+<li><strong>模板框架</strong>：提供组件化开发模式支持；配合前端框架收集页面所需要的最小静态资源需求；留有充分的性能优化空间，性能优化对工程师透明。</li>
+<li><strong>自动化工具</strong>：提供基本优化能力；为前端框架、模板框架提供辅助支持。</li>
+<li><strong>辅助开发工具</strong>：提升工程师的开发体验，降低调试、部署成本。</li>
+</ol>
+<p>如果你想了解更多可以看这篇文章<a href="https://github.com/fex-team/fis/wiki/%E4%BB%80%E4%B9%88%E6%98%AFF.I.S" target="_blank" rel="external">《什么是F.I.S》</a>。</p>
+<a id="more"></a>
+<h5 id="三条基本语句"><a href="#三条基本语句" class="headerlink" title="三条基本语句"></a>三条基本语句</h5><p>FIS的基础使用并不难，也就是三条指令 fis install(下载需要的组件)、fis release(编译并发布到服务器)、fis server(内置服务器相关)。<br>使用 fis release –optimize 实现资源压缩，fis release –md5实现对静态资源添加md5戳，fis release –pack实现资源合并。如果想同时使用三种功能可以  fis release -omp。<br>资源合并需要在fis.config.js中进行打包规则的设定。<br>例如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fis.config.set(<span class="string">'pack'</span>, &#123;</span><br><span class="line"> <span class="string">'pkg/lib.js'</span>: [</span><br><span class="line">    <span class="string">'/lib/mod.js'</span>,</span><br><span class="line">    <span class="string">'/modules/underscore/**.js'</span>,</span><br><span class="line">    <span class="string">'/modules/backbone/**.js'</span>,</span><br><span class="line">    <span class="string">'/modules/jquery/**.js'</span>,</span><br><span class="line">    <span class="string">'/modules/vendor/**.js'</span>,</span><br><span class="line">    <span class="string">'/modules/common/**.js'</span></span><br><span class="line">  ]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>设置完pack后，FIS默认只会进行文件打包，不会对页面中的静态资源引用进行替换，我们可以引入fis-postpackager-simple进行资源引用替换。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fis.config.set(<span class="string">'modules.postpackager'</span>,<span class="string">'simple'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>如果要同时使用</p>
+<h5 id="三种语言能力"><a href="#三种语言能力" class="headerlink" title="三种语言能力"></a>三种语言能力</h5><h6 id="资源定位"><a href="#资源定位" class="headerlink" title="资源定位"></a>资源定位</h6><p>资源定位其实就是指开发路径和部署路径分离，你可以通过配置来决定产出后静态资源的路径。<br><img src="/images/20170118/1.png" alt="uri.png"></p>
+<h5 id="内容嵌入"><a href="#内容嵌入" class="headerlink" title="内容嵌入"></a>内容嵌入</h5><p>内容嵌入可以为工程师提供诸如图片base64嵌入到css、js里，前端模板编译到js文件中，将js、css、html拆分成几个文件最后合并到一起的能力。有了这项能力，可以有效的减少http请求数，提升工程的可维护性。<a href="http://www.tuicool.com/articles/IbYJvin" target="_blank" rel="external">(图片base64为什么能减少http请求？)</a></p>
+<h5 id="依赖声明"><a href="#依赖声明" class="headerlink" title="依赖声明"></a>依赖声明</h5><p>我们可以通过在html、css、js文件中声明对其他资源的依赖，然后fis在编译的过程中会扫描这些声明，建立一张静态资源关系表，从而建立一张<strong>map.json</strong>文件，使用fis作为编译工具的项目，可以将这张表提交给后端或者前端框架去运行时根据组件使用情况来 <strong>按需加载资源或者资源所在的包</strong>，从而提升前端页面运行性能。</p>
+<h5 id="配置api"><a href="#配置api" class="headerlink" title="配置api"></a>配置api</h5><p>虽然fis的基本功能就基本满足了大部分前端开发的要求，但是还是需要进行插件配置来满足不同项目的需求。在学习如何配置之前，要先理解一下单文件编译原理和打包原理。</p>
+<p><img src="/images/20170118/2.png" alt="fis编译流程.png"><br>从图中我们可以看出，在单文件编译过程中有7个可扩展的处理过程，打包过程中有4个可扩展的处理过程，我们就在这些地方进行配置。</p>
+<h6 id="使用配置文件"><a href="#使用配置文件" class="headerlink" title="使用配置文件"></a>使用配置文件</h6><p>在项目目录下新建一个 <strong>fis-conf.js</strong> 文件，我们可以对fis的编译系统做各种定制化配置。配置fis系统的接口是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fis.config.set(<span class="string">'key'</span>,value);</span><br><span class="line">\\或者</span><br><span class="line">fis.config.merge(&#123;&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>配置一共分为六类，项目配置、插件配置、插件运行配置、目录规范与域名配置、部署配置、打包配置。因为每项配置都有各种插件，所以用代码＋注释来总结。</p>
+<h6 id="项目配置"><a href="#项目配置" class="headerlink" title="项目配置"></a>项目配置</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//项目配置 配置项project</span><br><span class="line">fis.config.merge(&#123;</span><br><span class="line">	project：&#123;</span><br><span class="line">		charset : <span class="string">'utf8'</span>,	//字符编码设置</span><br><span class="line">		md5Length : 8,		//md5戳长度设置</span><br><span class="line">		md5Connector : <span class="string">'.'</span>, //md5与文件的连接符设置</span><br><span class="line">		include : <span class="string">'src/**'</span>, //命中include的文件才会视为源码</span><br><span class="line">        //排除命中文件，如果同时设置include则指排出命中include中的文件</span><br><span class="line">		exclude : /^\/_build\//i,</span><br><span class="line">		fileType:&#123;</span><br><span class="line">			text : <span class="string">'tpl,js,css'</span>, //追加文本后缀列表</span><br><span class="line">			image : <span class="string">'swf,cur,ico'</span>//追加图片类二进制文件后缀列表</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br><span class="line">//解释：设置项目源码监听时不监听的文件列表。</span><br><span class="line">fis.config.set(<span class="string">'project.watch.exclude'</span>, <span class="string">'node_modules'</span>);</span><br><span class="line">//设置项目源码监听的方式，<span class="literal">true</span>为轮询方式，<span class="literal">false</span>为用系统api检查</span><br><span class="line">fis.config.set(<span class="string">'project.watch.usePolling'</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<h6 id="插件配置"><a href="#插件配置" class="headerlink" title="插件配置"></a>插件配置</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">//插件配置 配置项modules</span><br><span class="line">fis.config.merge(&#123;</span><br><span class="line">	modules : &#123;</span><br><span class="line">		parser : &#123; //配置编译器插件，可以根据 文件后缀 将某种语言编译成标准的js、css、html语言。</span><br><span class="line">			less : [<span class="string">'less'</span>],</span><br><span class="line">			md : <span class="string">'marked'</span></span><br><span class="line">		&#125;,</span><br><span class="line">		preprocessor : &#123; //配置标准化预处理器插件，可以根据文件后缀对文件进行预处理。</span><br><span class="line">			css : <span class="string">'image-set'</span></span><br><span class="line">		&#125;,</span><br><span class="line">		postprocessor : &#123;//在fis对静态资源进行语言能力扩展之后调用的插件配置，可以根据文件后缀对文件进行后处理。</span><br><span class="line">			js : <span class="string">'jswrapper'</span></span><br><span class="line">		&#125;,</span><br><span class="line">		lint : &#123;//配置代码检查插件</span><br><span class="line">			js : <span class="string">'jshint'</span> //js后缀文件会经过fis-lint-jshint插件的代码校验检查</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="built_in">test</span> : &#123;//配置自动测试插件</span><br><span class="line">			js : <span class="string">'phantomjs'</span></span><br><span class="line">		&#125;,</span><br><span class="line">		optimizer : &#123;//配置文件优化插件</span><br><span class="line">			js : <span class="string">'uglify-js'</span></span><br><span class="line">		&#125;,</span><br><span class="line">		prepackager : <span class="string">'xx'</span>,//打包预处理插件</span><br><span class="line">		packager : <span class="string">'packager'</span>,//打包插件</span><br><span class="line">		spriter : <span class="string">'spriter'</span>,//打包后处理csssprite插件</span><br><span class="line">		postpackager : <span class="string">'postpackager'</span>//打包后处理插件</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h6 id="插件运行配置"><a href="#插件运行配置" class="headerlink" title="插件运行配置"></a>插件运行配置</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//插件运行配置 配置项settings</span><br><span class="line">fis.config.merge(&#123;</span><br><span class="line">    settings : &#123;</span><br><span class="line">        optimizer : &#123;</span><br><span class="line">            //fis-optimizer-uglify-js插件的配置数据</span><br><span class="line">            <span class="string">'uglify-js'</span> : &#123;</span><br><span class="line">                output : &#123;</span><br><span class="line">                    max_line_len : 500</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            //fis-optimizer-clean-css插件的配置数据</span><br><span class="line">            <span class="string">'clean-css'</span> : &#123;</span><br><span class="line">                keepBreaks : <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>还有个内置插件运行配置，其实就是对fis中内置的插件进行详细的配置。</p>
+<h6 id="目录规范与域名配置"><a href="#目录规范与域名配置" class="headerlink" title="目录规范与域名配置"></a>目录规范与域名配置</h6><p>这部分我觉得是比较重要的，roadmap.path负责设置项目文件属性，与fis的三种语言能力都有关系，roadmap.ext指定后缀名与标准化语言的映射关系，roadmap.domain负责设置静态资源的域名前缀。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">//目录规范与域名配置 配置项roadmap</span><br><span class="line">fis.config.merge(&#123;</span><br><span class="line">    roadmap : &#123;</span><br><span class="line">        path : [</span><br><span class="line">            &#123;</span><br><span class="line">                //所有widget目录下的js文件</span><br><span class="line">                reg : <span class="string">'widget/**.js'</span>,</span><br><span class="line">                //是模块化的js文件（标记为这种值的文件，会进行amd或者闭包包装）</span><br><span class="line">                isMod : <span class="literal">true</span>,</span><br><span class="line">                //默认依赖lib.js</span><br><span class="line">                requires : [ <span class="string">'lib.js'</span> ],</span><br><span class="line">                //向产出的map.json文件里附加一些信息</span><br><span class="line">                extras : &#123; say : <span class="string">'123'</span> &#125;,</span><br><span class="line">                //编译后产出到 /static/widget/xxx 目录下</span><br><span class="line">                release : <span class="string">'/static$&amp;'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                //所有的js文件</span><br><span class="line">                reg : <span class="string">'**.js'</span>,</span><br><span class="line">                //发布到/static/js/xxx目录下</span><br><span class="line">                release : <span class="string">'/static/js$&amp;'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                //所有的ico文件</span><br><span class="line">                reg : <span class="string">'**.ico'</span>,</span><br><span class="line">                //发布的时候即使加了--md5参数也不要生成带md5戳的文件</span><br><span class="line">                useHash : <span class="literal">false</span>,</span><br><span class="line">                //发布到/static/xxx目录下</span><br><span class="line">                release : <span class="string">'/static$&amp;'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                //所有image目录下的.png，.gif文件</span><br><span class="line">                reg : /^\/images\/(.*\.(?:png|gif))/i,</span><br><span class="line">                //访问这些图片的url是 <span class="string">'/m/xxxx?log_id=123'</span></span><br><span class="line">                url : <span class="string">'/m/$1?log_id=123'</span>,</span><br><span class="line">                //发布到/static/pic/xxx目录下</span><br><span class="line">                release : <span class="string">'/static/pic/$1'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                //所有template目录下的.php文件</span><br><span class="line">                reg : /^\/template\/(.*\.php)/i,</span><br><span class="line">                //是类html文件，会进行html语言能力扩展</span><br><span class="line">                isHtmlLike : <span class="literal">true</span>,</span><br><span class="line">                //发布为gbk编码文件</span><br><span class="line">                charset : <span class="string">'gbk'</span>,</span><br><span class="line">                //发布到/php/template/xxx目录下</span><br><span class="line">                release : <span class="string">'/php/template/$1'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                //前面规则未匹配到的其他文件</span><br><span class="line">                reg : /.*/,</span><br><span class="line">                //编译的时候不要产出了</span><br><span class="line">                release : <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]，</span><br><span class="line">        ext : &#123;</span><br><span class="line">            //less后缀的文件将输出为css后缀</span><br><span class="line">            //并且在parser之后的其他处理流程中被当做css文件处理</span><br><span class="line">            less : <span class="string">'css'</span>,</span><br><span class="line">            //coffee后缀的文件将输出为js文件</span><br><span class="line">            //并且在parser之后的其他处理流程中被当做js文件处理</span><br><span class="line">            coffee : <span class="string">'js'</span>,</span><br><span class="line">            //md后缀的文件将输出为html文件</span><br><span class="line">            //并且在parser之后的其他处理流程中被当做html文件处理</span><br><span class="line">            md : <span class="string">'html'</span></span><br><span class="line">        &#125;，</span><br><span class="line">        domain : &#123;</span><br><span class="line">            //widget目录下的所有css文件使用 http://css1.example.com 作为域名</span><br><span class="line">            <span class="string">'widget/**.css'</span> : <span class="string">'http://css1.example.com'</span>,</span><br><span class="line">            //所有的js文件使用 http://js1.example.com 或者  http://js2.example.com 作为域名</span><br><span class="line">            <span class="string">'**.js'</span> : [<span class="string">'http://js1.example.com'</span>, <span class="string">'http://js2.example.com'</span>]，</span><br><span class="line">            <span class="string">'image'</span> : [<span class="string">'http://img1.example.com'</span>]//设置图片域名前缀</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h6 id="部署配置"><a href="#部署配置" class="headerlink" title="部署配置"></a>部署配置</h6><p>deploy设置项目的发布方式，可以发布到本地也可以发布到服务器。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">//部署配置 配置项deploy</span><br><span class="line">fis.config.merge(&#123;</span><br><span class="line">    deploy : &#123;</span><br><span class="line">        //使用fis release --dest remote来使用这个配置</span><br><span class="line">        remote : &#123;</span><br><span class="line">            //如果配置了receiver，fis会把文件逐个post到接收端上</span><br><span class="line">            receiver : <span class="string">'http://www.example.com/path/to/receiver.php'</span>,</span><br><span class="line">            //从产出的结果的static目录下找文件</span><br><span class="line">            from : <span class="string">'/static'</span>,</span><br><span class="line">            //保存到远端机器的/home/fis/www/static目录下</span><br><span class="line">            //这个参数会跟随post请求一起发送</span><br><span class="line">            to : <span class="string">'/home/fis/www/'</span>,</span><br><span class="line">            //通配或正则过滤文件，表示只上传所有的js文件</span><br><span class="line">            include : <span class="string">'**.js'</span>,</span><br><span class="line">            //widget目录下的那些文件就不要发布了</span><br><span class="line">            exclude : /\/widget\//i,</span><br><span class="line">            //支持对文件进行字符串替换</span><br><span class="line">            replace : &#123;</span><br><span class="line">                from : <span class="string">'http://www.online.com'</span>,</span><br><span class="line">                to : <span class="string">'http://www.offline.com'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        //名字随便取的，没有特殊含义</span><br><span class="line">        <span class="built_in">local</span> : &#123;</span><br><span class="line">            //from参数省略，表示从发布后的根目录开始上传</span><br><span class="line">            //发布到当前项目的上一级的output目录中</span><br><span class="line">            to : <span class="string">'../output'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        //也可以是一个数组</span><br><span class="line">        remote2 : [</span><br><span class="line">            &#123;</span><br><span class="line">                //将static目录上传到/home/fis/www/webroot下</span><br><span class="line">                //上传文件路径为/home/fis/www/webroot/static/xxxx</span><br><span class="line">                receiver : <span class="string">'http://www.example.com/path/to/receiver.php'</span>,</span><br><span class="line">                from : <span class="string">'/static'</span>,</span><br><span class="line">                to : <span class="string">'/home/fis/www/webroot'</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                //将template目录内的文件（不包括template一级）</span><br><span class="line">                //上传到/home/fis/www/tpl下</span><br><span class="line">                //上传文件路径为/home/fis/www/tpl/xxxx</span><br><span class="line">                receiver : <span class="string">'http://www.example.com/path/to/receiver.php'</span>,</span><br><span class="line">                from : <span class="string">'/template'</span>,</span><br><span class="line">                to : <span class="string">'/home/fis/www/tpl'</span>,</span><br><span class="line">                subOnly : <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h6 id="打包配置"><a href="#打包配置" class="headerlink" title="打包配置"></a>打包配置</h6><p>这个就比较熟悉了，在前面的资源合并中也有提到。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//打包配置</span><br><span class="line">fis.config.merge(&#123;</span><br><span class="line">    pack : &#123;</span><br><span class="line">        //打包所有的demo.js, script.js文件</span><br><span class="line">        //将内容输出为static/pkg/aio.js文件</span><br><span class="line">        <span class="string">'pkg/aio.js'</span> : [<span class="string">'**/demo.js'</span>, /\/script\.js$/i],</span><br><span class="line">        //打包所有的css文件</span><br><span class="line">        //将内容输出为static/pkg/aio.css文件</span><br><span class="line">        <span class="string">'pkg/aio.css'</span> : <span class="string">'**.css'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>fis是一个前端工具框架，我们可以通过相应的配置来满足不同的项目需求，尤其是三种语言能力，为前端开发的我们解决了很多不必要的麻烦，除此之外，我觉得难点重点主要在对fis.config.js的配置上，所以要重点看配置api这一部分。<br>其实学习fis的时间不长，加起来应该不到三天，只在fis官方文档提供的fis-quickstart-demo中进行了练习，心得可能稍微有点浅，等以后实际应用了再来完善。<br>参考文档：<br><a href="http://fex.baidu.com/fis-site/docs/beginning/getting-started.html" target="_blank" rel="external">《fis官方文档》</a><br><a href="https://github.com/fex-team/fis/wiki/%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86" target="_blank" rel="external">《fis运行原理》</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/fis/" rel="tag"># fis</a>
+          
+            <a href="/tags/前端工具/" rel="tag"># 前端工具</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/19/Less学习整理/" rel="next" title="Less学习整理">
+                <i class="fa fa-chevron-left"></i> Less学习整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/20/fisp项目练习/" rel="prev" title="fisp项目练习">
+                fisp项目练习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhenkunliu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhenkn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/执凉" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#什么是FIS？"><span class="nav-number">1.</span> <span class="nav-text">什么是FIS？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三条基本语句"><span class="nav-number">2.</span> <span class="nav-text">三条基本语句</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三种语言能力"><span class="nav-number">3.</span> <span class="nav-text">三种语言能力</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#资源定位"><span class="nav-number">3.1.</span> <span class="nav-text">资源定位</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#内容嵌入"><span class="nav-number">4.</span> <span class="nav-text">内容嵌入</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖声明"><span class="nav-number">5.</span> <span class="nav-text">依赖声明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置api"><span class="nav-number">6.</span> <span class="nav-text">配置api</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#使用配置文件"><span class="nav-number">6.1.</span> <span class="nav-text">使用配置文件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#项目配置"><span class="nav-number">6.2.</span> <span class="nav-text">项目配置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#插件配置"><span class="nav-number">6.3.</span> <span class="nav-text">插件配置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#插件运行配置"><span class="nav-number">6.4.</span> <span class="nav-text">插件运行配置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#目录规范与域名配置"><span class="nav-number">6.5.</span> <span class="nav-text">目录规范与域名配置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#部署配置"><span class="nav-number">6.6.</span> <span class="nav-text">部署配置</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#打包配置"><span class="nav-number">6.7.</span> <span class="nav-text">打包配置</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhenkunliu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

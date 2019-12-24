@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="总结,fis、fisp," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="(这个自动保存。。竟然只是临时保存！😢) 简述fisp基本用法和Smarty的基础语法就不赘述了，可以看fisp官方文档和慕课网上的教程，这里主要讲我自己学习构建的项目。开始时是想学前辈构建一个google主页，但是我又想尝试一下对php传输到模版到数据进行处理，所以就选了github的profile页面。">
+<meta name="keywords" content="总结,fis、fisp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fisp项目练习">
+<meta property="og:url" content="http://liuzhenkn.github.io/2016/12/20/fisp项目练习/index.html">
+<meta property="og:site_name" content="zhenkunliu&#39;s blog">
+<meta property="og:description" content="(这个自动保存。。竟然只是临时保存！😢) 简述fisp基本用法和Smarty的基础语法就不赘述了，可以看fisp官方文档和慕课网上的教程，这里主要讲我自己学习构建的项目。开始时是想学前辈构建一个google主页，但是我又想尝试一下对php传输到模版到数据进行处理，所以就选了github的profile页面。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/3.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/4.png">
+<meta property="og:image" content="http://liuzhenkn.github.io/images/20170118/5.png">
+<meta property="og:updated_time" content="2019-12-24T06:47:57.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fisp项目练习">
+<meta name="twitter:description" content="(这个自动保存。。竟然只是临时保存！😢) 简述fisp基本用法和Smarty的基础语法就不赘述了，可以看fisp官方文档和慕课网上的教程，这里主要讲我自己学习构建的项目。开始时是想学前辈构建一个google主页，但是我又想尝试一下对php传输到模版到数据进行处理，所以就选了github的profile页面。">
+<meta name="twitter:image" content="http://liuzhenkn.github.io/images/20170118/3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liuzhenkn.github.io/2016/12/20/fisp项目练习/"/>
+
+
+
+
+
+  <title>fisp项目练习 | zhenkunliu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhenkunliu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知世故而不世故，善自嘲而不嘲人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liuzhenkn.github.io/2016/12/20/fisp项目练习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhenkunliu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhenkunliu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">fisp项目练习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-20T00:00:00+08:00">
+                2016-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>(这个自动保存。。竟然只是临时保存！😢)</p>
+<h5 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h5><p>fisp基本用法和Smarty的基础语法就不赘述了，可以看<a href="http://fex-team.github.io/fis-plus/" target="_blank" rel="external">fisp官方文档</a>和<a href="http://www.imooc.com/learn/69" target="_blank" rel="external">慕课网上的教程</a>，这里主要讲我自己学习构建的项目。<br>开始时是想学前辈构建一个google主页，但是我又想尝试一下对php传输到模版到数据进行处理，所以就选了<strong>github的profile</strong>页面。</p>
+<a id="more"></a>
+<p><img src="/images/20170118/3.png" alt="showProgram.png"></p>
+<p>(哈哈哈虽然除了中间那部分基本都是图片，但是主要还是体验。)</p>
+<h5 id="项目构建"><a href="#项目构建" class="headerlink" title="项目构建"></a>项目构建</h5><p>fisp项目通常分为common和其他模块，common模块中通常存放可复用的文件/组件，fisp的其他模块也有着严格的目录规范，通常如下：</p>
+<p><img src="/images/20170118/4.png" alt="moduleList.png"></p>
+<ul>
+<li><strong>page</strong>中放页面模版</li>
+<li><strong>static</strong>中存放不需要组件化的公共库</li>
+<li><strong>test</strong>中存放数据与page中的模版相对应</li>
+<li><strong>widget</strong> 中存放模板组件，JS组件，CSS组件等。</li>
+<li><strong>server.conf</strong> 这是一个很有用的文件，它里面可以配置url转发，可以方便在本地模拟ajax请求等。（这个我暂时不太懂怎么做）<br>另外fis-config.js文件在每个模块中都有，需要注意的是需要在fis-config.js中设置namespace用来区分是哪个模块。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fis.config.set(<span class="string">'namespace'</span>,<span class="string">'name'</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>接下来就是我的项目构建，我构建了两个模块common和home， 将fis-config配置好后，将所需的静态文件建立好放到相应的目录。（我觉得这是一个很重要的过程，你要想好你这个页面要分成多少个部分？构建多少个组件？哪些可以复用放到common中？这都是要提前想好的。）<br>最后构建好是这样的：</p>
+<p><img src="/images/20170118/5.png" alt="treeList.png"></p>
+<h5 id="细节展示"><a href="#细节展示" class="headerlink" title="细节展示"></a>细节展示</h5><p>建立整个项目都有用到的模版layout.tpl，放在common—&gt;page中，｛%block name=“static_source”%}用于加载页面中需要的静态文件，｛％block name=“content”％｝用于加载页面的主体内容。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&#123;%html framework=<span class="string">"common:static/mod.js"</span> class=<span class="string">"expanded"</span>%&#125;</span><br><span class="line">	&#123;%head%&#125;</span><br><span class="line">		&lt;meta charset=<span class="string">"utf-8"</span>/&gt;</span><br><span class="line">		&lt;title&gt;&#123;%<span class="variable">$title</span>%&#125;&lt;/title&gt;</span><br><span class="line">		&#123;%block name=<span class="string">"static_source"</span>%&#125;&#123;%/block%&#125;</span><br><span class="line">	&#123;%/head%&#125;</span><br><span class="line">	&#123;%body%&#125;</span><br><span class="line">		&#123;%block name=<span class="string">"content"</span>%&#125;&#123;%/block%&#125;</span><br><span class="line">	&#123;%/body%&#125;</span><br><span class="line">&#123;%/html%&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后在index.tpl中引用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;%extends file=<span class="string">"common/page/layout.tpl"</span>%&#125;</span><br><span class="line">&#123;%block name=<span class="string">"static_source"</span>%&#125;</span><br><span class="line">	&#123;%require name=<span class="string">"home:static/main/main.css"</span>%&#125;</span><br><span class="line">&#123;%/block%&#125;</span><br><span class="line">&#123;%block name=<span class="string">"content"</span>%&#125;</span><br><span class="line">	&lt;div id=<span class="string">"header"</span>&gt;</span><br><span class="line">		&#123;%widget name=<span class="string">"common:widget/header/header.tpl"</span>%&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;div id=<span class="string">"container"</span>&gt;</span><br><span class="line">		&lt;div class=<span class="string">"left_profile"</span>&gt;</span><br><span class="line">			&#123;%widget name=<span class="string">"home:widget/photo/photo.tpl"</span> data=<span class="variable">$name</span>%&#125;</span><br><span class="line">			&#123;%widget name=<span class="string">"home:widget/left_foot/left_foot.tpl"</span>%&#125;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;div class=<span class="string">"right_profile"</span>&gt;</span><br><span class="line">			&#123;%widget name=<span class="string">"home:widget/right_header/header.tpl"</span>%&#125;</span><br><span class="line">			&#123;%widget name=<span class="string">"home:widget/right_program/program.tpl"</span> data=<span class="variable">$docs</span>%&#125;</span><br><span class="line">			&#123;%widget name=<span class="string">"home:widget/right_footer/footer.tpl"</span>%&#125;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">		&lt;div class=<span class="string">"clear"</span>&gt;&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;footer&gt;</span><br><span class="line">		&#123;%widget name=<span class="string">"common:widget/footer/footer.tpl"</span>%&#125;</span><br><span class="line">	&lt;/footer&gt;</span><br><span class="line">&#123;%/block%&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到我们用require请求静态文件，用widget调用组件。<br>(我为了多练习一下将页面分成了好几个组件，有点啰嗦，所以组件是如何实现的就不展示了。)<br>别忘了php中的模拟数据，因为我没学过php，所以就模仿了pc-demo。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	<span class="variable">$github</span> = <span class="string">'https://github.com/'</span>;</span><br><span class="line">	<span class="variable">$fis_data</span> = array(</span><br><span class="line">		<span class="string">'title'</span> =&gt; <span class="string">'Smarty练习'</span>,</span><br><span class="line">		<span class="string">'name'</span> =&gt; <span class="string">'zhiliang'</span>,</span><br><span class="line">		<span class="string">'docs'</span> =&gt; array(</span><br><span class="line">			array(</span><br><span class="line">				<span class="string">'project'</span> =&gt; <span class="string">'ife'</span>,</span><br><span class="line">				<span class="string">'detail'</span> =&gt; <span class="string">'Baidu Institute of Fornt - End Technology'</span></span><br><span class="line">			),</span><br><span class="line">			array(</span><br><span class="line">				<span class="string">'project'</span> =&gt; <span class="string">'Lenovo-sale'</span>,</span><br><span class="line">				<span class="string">'detail'</span> =&gt; <span class="string">'Lenovo sale for the course of software engineering'</span></span><br><span class="line">			),</span><br><span class="line">			array(</span><br><span class="line">				<span class="string">'project'</span> =&gt; <span class="string">'liuzhenkun.github.io'</span>,</span><br><span class="line">				<span class="string">'detail'</span> =&gt; <span class="string">''</span></span><br><span class="line">			),</span><br><span class="line">			array(</span><br><span class="line">				<span class="string">'project'</span> =&gt; <span class="string">'lshPrograms'</span>,</span><br><span class="line">				<span class="string">'detail'</span> =&gt; <span class="string">''</span></span><br><span class="line">			)</span><br><span class="line">		)</span><br><span class="line">	);</span><br></pre></td></tr></table></figure></p>
+<p>这里有个问题，为什么我在模版中只能获取到fis-data中的数据呢？这个问题我也查了好久没能找到个明确的说法。<br>最后，把所有部分都完成，启动项目。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//如果没初始化别忘了 fisp init</span><br><span class="line">fisp release -r home</span><br><span class="line">fisp release -r common</span><br><span class="line">fisp server start</span><br></pre></td></tr></table></figure></p>
+<p>#####总结<br>自己构建这样一个项目，我感觉主要就是了解基本应用，另外对组件化的概念有了一定对认识，另外学会对于后台传过来的数据进行调用处理（以前用Jade也了解），其实在晚上海鹏codeview的时候看实际代码还是有点晕的，离实际开发还是有点远，期待以后参与实际开发。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/总结/" rel="tag"># 总结</a>
+          
+            <a href="/tags/fis、fisp/" rel="tag"># fis、fisp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/19/FIS学习记录/" rel="next" title="FIS学习记录">
+                <i class="fa fa-chevron-left"></i> FIS学习记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/19/如何制定计划/" rel="prev" title="如何制定计划">
+                如何制定计划 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhenkunliu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhenkn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/执凉" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#项目构建"><span class="nav-number">2.</span> <span class="nav-text">项目构建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#细节展示"><span class="nav-number">3.</span> <span class="nav-text">细节展示</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhenkunliu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

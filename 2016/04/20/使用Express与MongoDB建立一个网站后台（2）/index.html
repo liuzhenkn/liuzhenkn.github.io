@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="后端,Node.js,Express," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="历经两个月的时间，我总算是把这个网站全部搞好了，虽然从每一个部分来看做的都很差，都大有改进之处，但是这一套网站从前端到后台再到服务器，都是由我自己搞定的，可以说是小小的体验了一次全栈开发吧，233。由于是买的阿里云的学生服务器，所以就买了一个月，已经到期了所以就不展示了。 下面我就说一下我在这次开发中学到的知识以及遇到的问题及其解决办法。">
+<meta name="keywords" content="后端,Node.js,Express">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Express与MongoDB建立一个网站后台（2）">
+<meta property="og:url" content="http://liuzhenkn.github.io/2016/04/20/使用Express与MongoDB建立一个网站后台（2）/index.html">
+<meta property="og:site_name" content="zhenkunliu&#39;s blog">
+<meta property="og:description" content="历经两个月的时间，我总算是把这个网站全部搞好了，虽然从每一个部分来看做的都很差，都大有改进之处，但是这一套网站从前端到后台再到服务器，都是由我自己搞定的，可以说是小小的体验了一次全栈开发吧，233。由于是买的阿里云的学生服务器，所以就买了一个月，已经到期了所以就不展示了。 下面我就说一下我在这次开发中学到的知识以及遇到的问题及其解决办法。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-24T06:47:57.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Express与MongoDB建立一个网站后台（2）">
+<meta name="twitter:description" content="历经两个月的时间，我总算是把这个网站全部搞好了，虽然从每一个部分来看做的都很差，都大有改进之处，但是这一套网站从前端到后台再到服务器，都是由我自己搞定的，可以说是小小的体验了一次全栈开发吧，233。由于是买的阿里云的学生服务器，所以就买了一个月，已经到期了所以就不展示了。 下面我就说一下我在这次开发中学到的知识以及遇到的问题及其解决办法。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liuzhenkn.github.io/2016/04/20/使用Express与MongoDB建立一个网站后台（2）/"/>
+
+
+
+
+
+  <title>使用Express与MongoDB建立一个网站后台（2） | zhenkunliu's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhenkunliu's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知世故而不世故，善自嘲而不嘲人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liuzhenkn.github.io/2016/04/20/使用Express与MongoDB建立一个网站后台（2）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhenkunliu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhenkunliu's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用Express与MongoDB建立一个网站后台（2）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-20T00:00:00+08:00">
+                2016-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>历经两个月的时间，我总算是把这个网站全部搞好了，虽然从每一个部分来看做的都很差，都大有改进之处，但是这一套网站从前端到后台再到服务器，都是由我自己搞定的，可以说是小小的体验了一次全栈开发吧，233。<br>由于是买的阿里云的学生服务器，所以就买了一个月，已经到期了所以就不展示了。</p>
+<p>下面我就说一下我在这次开发中学到的知识以及遇到的问题及其解决办法。</p>
+<a id="more"></a>
+<h3 id="GET-POST"><a href="#GET-POST" class="headerlink" title="GET POST"></a>GET POST</h3><p>首先就是从 GET或POST 的数据中获取想要得到的数据以及返回数据<br>对于get 获取数据是 req.params,对于post 获取数据是 req.body。<br>返回数据使用的是 res.send()。</p>
+<h3 id="模板引擎"><a href="#模板引擎" class="headerlink" title="模板引擎"></a>模板引擎</h3><p>模板引擎的使用是我的另一个收获吧，其实一开始我是拒绝使用的，但是我又发现它对于我这种没做过后台开发的人来说又十分好用，因为模板引擎把前后端的技术揉杂在一起，可以很简单的就处理了从后台传过来的数据。<br>在使用前首先你要调用一个模块，来告诉服务器你使用的是什么模板引擎:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.set(&apos;view engine&apos;, &apos;jade&apos;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>会话(session),以前在自学JSP的时候接触过session，但是没有真正用过，但是在写这个网站的用户登录的时候就用到了，为了让用户登录了之后一直保持登录状态，我将登录后的username保存在session中:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">router.post(&apos;/login&apos;, function(req, res) &#123;</span><br><span class="line">    var query_doc = &#123;username: req.body.username, password: req.body.password&#125;;</span><br><span class="line">    user.find(&#123;username:query_doc.username&#125;,function(err,docs)&#123;</span><br><span class="line">    	if(docs == &quot;&quot;)&#123;</span><br><span class="line">            console.log(&quot;login failed in &quot; + new Date());</span><br><span class="line">            res.render(&apos;warning&apos;, &#123; title: &apos;用户名不存在，请重新登录&apos; &#125;);   	</span><br><span class="line">    	&#125;else&#123;</span><br><span class="line">	    	var text = eval(&apos;(&apos;+ docs +&apos;)&apos;);</span><br><span class="line">	    	if(text.password == query_doc.password)&#123;</span><br><span class="line">	            console.log(query_doc.username + &quot;: login success in &quot; + new Date());</span><br><span class="line">	            computer.findShow(function(err,computers)&#123;</span><br><span class="line">	            	req.session.username = query_doc.username;//保存在session中</span><br><span class="line">	            	console.log(req.session.username);</span><br><span class="line">	            	res.render(&apos;index&apos;, &#123;</span><br><span class="line">	            		title: &apos;首页&apos;,</span><br><span class="line">	            		username: req.session.username,</span><br><span class="line">	            		computers: computers</span><br><span class="line">	            	&#125;);  	            	</span><br><span class="line">	            &#125;)</span><br><span class="line">	    	&#125;else&#123;</span><br><span class="line">	            console.log(&quot;login failed in &quot; + new Date());</span><br><span class="line">	            res.render(&apos;warning&apos;, &#123; title: &apos;密码错误&apos; &#125;);    		</span><br><span class="line">	    	&#125;	    		</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>在使用session前也需要调用相应的模块，并做出一些设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var session = require(&apos;express-session&apos;);</span><br><span class="line">app.use(session(&#123;</span><br><span class="line">    secret: &apos;12345&apos;,</span><br><span class="line">    name: &apos;connect.sid&apos;,   //这里的name值得是cookie的name，默认cookie的name是：connect.sid</span><br><span class="line">    cookie: &#123;maxAge: 480000 &#125;,  //设置maxAge是480000ms，即480s后session和相应的cookie失效过期</span><br><span class="line">    resave: false,</span><br><span class="line">    saveUninitialized: true</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure></p>
+<h3 id="Ajax模拟get-post方法"><a href="#Ajax模拟get-post方法" class="headerlink" title="Ajax模拟get post方法"></a>Ajax模拟get post方法</h3><p>Ajax确实不陌生了，但是在我做的项目中我确实没怎么使用过，但是这次为了给a标签添加get post方法，我便使用了Ajax,因为已经引入过Jquery了，所以我就直接使用了Jquery Ajax:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;#sum&quot;).click(function()&#123;</span><br><span class="line">    var money = $(&quot;.sum&quot;).text();</span><br><span class="line">    var flag = window.confirm(&quot;总价是：&quot;+money+&quot;是否结算？&quot;);</span><br><span class="line">    if(flag)&#123;</span><br><span class="line">        console.log(flag);</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            type: &quot;POST&quot;,</span><br><span class="line">            url: &quot;/account&quot;,</span><br><span class="line">            dataType: &quot;json&quot;,</span><br><span class="line">            success: function(msg)&#123;</span><br><span class="line">                alert(msg.success);</span><br><span class="line">                window.location.reload();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="非关系型数据库Mongodb"><a href="#非关系型数据库Mongodb" class="headerlink" title="非关系型数据库Mongodb"></a>非关系型数据库Mongodb</h3><p>非关系型数据库确实方便，没有关系型数据库的主键外键之类的限制，不过缺点的话，我觉得没有了限制可能导致添加进不符合要求的数据。<br>Mongodb的查询语句也和Javascript的语法相近，我用起来也比较顺手。<br>在使用前要请求mongoose模块，并建立相应的模型，也可以定义静态方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">var mongoose = require(&quot;mongoose&quot;);  //  顶会议用户组件</span><br><span class="line">var Schema = mongoose.Schema;    //  创建模型</span><br><span class="line">var shopScheMa = new Schema(&#123;</span><br><span class="line">    username: String,</span><br><span class="line">    name: String,</span><br><span class="line">    type: String,</span><br><span class="line">    infor: String,</span><br><span class="line">    cost: Number</span><br><span class="line">&#125;);</span><br><span class="line">//定义静态方法</span><br><span class="line">shopScheMa.statics = &#123;</span><br><span class="line">	findName: function(username,cb)&#123;</span><br><span class="line">		return this</span><br><span class="line">		.find(&#123;username: username&#125;)</span><br><span class="line">		.exec(cb);</span><br><span class="line">	&#125;,</span><br><span class="line">	removeOne: function(username,name,cb)&#123;</span><br><span class="line">		return this</span><br><span class="line">		.remove(&#123;username: username,name: name&#125;)</span><br><span class="line">		.exec(cb);</span><br><span class="line">	&#125;,</span><br><span class="line">	removeAll: function(username,cb)&#123;</span><br><span class="line">		return this</span><br><span class="line">		.remove(&#123;username: username&#125;)</span><br><span class="line">		.exec(cb);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.shoplist = mongoose.model(&apos;shoplists&apos;, shopScheMa);</span><br></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总的来说是一次比较成功的体验吧，学到了很多知识，不过还有很多地方有待改进，在接下来的时间里我会慢慢的改得，谢谢。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后端/" rel="tag"># 后端</a>
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+            <a href="/tags/Express/" rel="tag"># Express</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/19/使用Express与MongoDB建立一个网站后台（1）/" rel="next" title="使用Express与MongoDB建立一个网站后台（1）">
+                <i class="fa fa-chevron-left"></i> 使用Express与MongoDB建立一个网站后台（1）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/19/Javascript浮点数运算问题/" rel="prev" title="Javascript浮点数运算问题">
+                Javascript浮点数运算问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zhenkunliu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/liuzhenkn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/执凉" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-POST"><span class="nav-number">1.</span> <span class="nav-text">GET POST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板引擎"><span class="nav-number">2.</span> <span class="nav-text">模板引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session"><span class="nav-number">3.</span> <span class="nav-text">Session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ajax模拟get-post方法"><span class="nav-number">4.</span> <span class="nav-text">Ajax模拟get post方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非关系型数据库Mongodb"><span class="nav-number">5.</span> <span class="nav-text">非关系型数据库Mongodb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhenkunliu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
